@@ -51,3 +51,15 @@ pytest -vvv -s tests/
 # pytest --cov
 # open htmlcov/index.html
 ```
+
+### To Run the test in Docker when cant run on local
+```
+1. fork the main repo.
+2. install docker-desktop.
+3. Create loging if not present.
+4. setup Dev environments in docker desktop to point to your forked repo.
+5. This will create a docker with the Debian GNU image with your github code in the root folder.
+6. This give options to open docker code into your local editor. Open in IDE and update the code, run the test until ready.
+7. push to forked github repository or building a docker image with the changes in the docker.
+8. Share it with the team
+```

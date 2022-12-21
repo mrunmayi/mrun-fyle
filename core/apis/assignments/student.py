@@ -11,7 +11,16 @@ student_assignments_resources = Blueprint('student_assignments_resources', __nam
 @student_assignments_resources.route('/assignments', methods=['GET'], strict_slashes=False)
 @decorators.auth_principal
 def list_assignments(p):
-    """Returns list of assignments"""
+    """
+    List assignments for a specific student id
+
+    Parameters:
+        p ([type]): [principal header for api to work]
+        incoming_payload ([data dictionary]): [student id]
+
+    Returns:
+        Json response: returns the assignment data as json data
+    """
     students_assignments = Assignment.get_assignments_by_student(p.student_id)
     students_assignments_dump = AssignmentSchema().dump(students_assignments, many=True)
     return APIResponse.respond(data=students_assignments_dump)
@@ -21,7 +30,16 @@ def list_assignments(p):
 @decorators.accept_payload
 @decorators.auth_principal
 def upsert_assignment(p, incoming_payload):
-    """Create or Edit an assignment"""
+    """
+    Create or Edit an assignment
+
+    Parameters:
+        p ([type]): [principal header for api to work]
+        incoming_payload ([data dictionary]): [assignment id and content]
+
+    Returns:
+        Json response: returns the assignment data as json data
+    """
     assignment = AssignmentSchema().load(incoming_payload)
     assignment.student_id = p.student_id
 
@@ -35,7 +53,16 @@ def upsert_assignment(p, incoming_payload):
 @decorators.accept_payload
 @decorators.auth_principal
 def submit_assignment(p, incoming_payload):
-    """Submit an assignment"""
+    """
+    Submit an assignment
+
+    Parameters:
+        p ([type]): [principal header for api to work]
+        incoming_payload ([data dictionary]): [assignment id]
+
+    Returns:
+        Json response: returns the assignment data as json data
+    """
     submit_assignment_payload = AssignmentSubmitSchema().load(incoming_payload)
 
     submitted_assignment = Assignment.submit(

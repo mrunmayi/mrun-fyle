@@ -6,7 +6,11 @@ from core.libs.helpers import GeneralObject
 
 
 class AssignmentSchema(SQLAlchemyAutoSchema):
+    """
+    Class AssignmentSubmitSchema
+    """
     class Meta:
+        """class Meta """
         model = Assignment
         unknown = EXCLUDE
 
@@ -21,12 +25,21 @@ class AssignmentSchema(SQLAlchemyAutoSchema):
 
     @post_load
     def initiate_class(self, data_dict, many, partial):
+        """
+        Initiate class AssignmentSchema
+        """
         # pylint: disable=unused-argument,no-self-use
         return Assignment(**data_dict)
 
 
 class AssignmentSubmitSchema(Schema):
+    """
+    Class AssignmentSubmitSchema
+    """
     class Meta:
+        """
+        Class Meta
+        """
         unknown = EXCLUDE
 
     id = fields.Integer(required=True, allow_none=False)
@@ -34,5 +47,29 @@ class AssignmentSubmitSchema(Schema):
 
     @post_load
     def initiate_class(self, data_dict, many, partial):
+        """
+        Initiate class AssignmentSubmitSchema
+        """
+        # pylint: disable=unused-argument,no-self-use
+        return GeneralObject(**data_dict)
+
+class AssignmentGradeSchema(Schema):
+    """
+    Class AssignmentGradeSchema
+    """
+    class Meta:
+        """
+        Class Meta
+        """
+        unknown = EXCLUDE
+
+    id = fields.Integer(required=True, allow_none=False)
+    grade = fields.String(required=True, allow_none=False, enum=GradeEnum)
+
+    @post_load
+    def initiate_class(self, data_dict, many, partial):
+        """
+        Initiate class AssignmentGradeSchema
+        """
         # pylint: disable=unused-argument,no-self-use
         return GeneralObject(**data_dict)
