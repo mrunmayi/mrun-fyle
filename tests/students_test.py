@@ -108,6 +108,49 @@ def test_edit_and_repost_assignment_student_1(client, h_student_1):
     assert response.status_code == StatusCode.SUCCESS
 
     data = response.json['data']
+
+    assert data['content'] == content
+    assert data['state'] == 'DRAFT'
+    assert data['teacher_id'] is None
+
+def test_edit_and_repost_bad_id(client, h_student_1):
+    """
+    Create assignment for student_1
+    """
+
+    content = 'ABCD TESTPOST_UPDATED'
+
+    response = client.post(
+        '/student/assignments',
+        headers=h_student_1,
+        json = {
+            'content': content,
+            'id': 1000
+        })
+
+    assert response.status_code == 404
+    error_response = response.json
+    assert error_response['error'] == 'FyleError'
+    assert error_response["message"] == 'No assignment with this id was found'
+
+def test_edit_and_repost_assignment_student_1(client, h_student_1):
+    """
+    Create assignment for student_1
+    """
+
+    content = 'ABCD TESTPOST_UPDATED'
+
+    response = client.post(
+        '/student/assignments',
+        headers=h_student_1,
+        json = {
+            'content': content,
+            'id': 6
+        })
+
+    assert response.status_code == 200
+
+    data = response.json['data']
     assert data['content'] == content
     assert data['state'] == 'DRAFT'
     assert data['teacher_id'] is None
